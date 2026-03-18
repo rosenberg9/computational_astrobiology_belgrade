@@ -1,0 +1,22 @@
+# baseline_ms.yaml
+
+Star:
+  ID: 0000                  # Arbitrary target ID
+  EvolutionaryStatus: ms      # Main-sequence
+  Magnitude: 10.0             # Visual magnitude (bright enough for high precision)
+  Teff: 5800.                 # Effective temperature in Kelvin (Sun-like)
+  Logg: 4.4                   # Surface gravity
+
+Observation:
+  Duration: 90.0              # Simulation duration in days (a typical PLATO quarter)
+  MasterSeed: 42              # Fixed seed for reproducibility
+
+Instrument:
+  Sampling: 25.               # PLATO's normal camera cadence in seconds
+  IntegrationTime: 21.        # Standard integration time in seconds
+
+Components:
+  Granulation: True           # Enable realistic stellar granulation noise
+  Activity: False             # Keep false for now; we will add stochastic activity/flares later
+  Transit: False              # Keep false for now; we will inject planets later
+  Oscillations: False         # Keep false for the very first test run to speed it up
