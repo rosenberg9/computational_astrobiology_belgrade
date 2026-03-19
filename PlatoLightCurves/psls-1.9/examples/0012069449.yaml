@@ -4,7 +4,24 @@
 # Observation conditions
 Observation:
   Duration : 730. #  [days]
+  QuarterDuration : [91.25, 91.25, 91.25, 91.25] # Duration of a single observing quarter [days]
   MasterSeed : 904040900 # Master seed of the pseudo-random number generator
+
+  Gaps:
+    Enable : 0
+    InterQuarterGapDuration : 0. # Duration of the inter-quarter gaps [days]
+    Seed: -1 # Seed of the pseudo-random number generator; negative value if controlled by MasterSeed
+    RandomGapDuration: 0. # Duration of the random interruptions [minutes]; nominal value: 0
+    RandomGapTimeFraction: 0. # fraction [in %] of the total time lost; nominal value: 0.5
+    RandomGapStep: 0. # Random gap step in %; nominal value: 0
+    PeriodicGapCadence: 5. # Cadence of the periodic interruptions [days]; nominal value: 5.
+    PeriodicGapDuration: 20. # Duration of each periodic interruption [minutes]; nominal value: 20
+    PeriodicGapJitter: 2. # Jitter in the time instants [hours]; nominal value: 2.
+    PeriodicGapStep: 0. # Periodic gap step in %; nominal value: 0
+
+External:
+  Enable: 0
+  FilePath: examples/external_example.txt
 
 # Instrument parameters
 Instrument:
@@ -13,6 +30,7 @@ Instrument:
   NGroup : 4 # Number of camera groups (1 -> 4)
   NCamera : 6 # Number of cameras per group (1 -> 6)
   TimeShift : 6.25 # Time shift between camera groups [s]
+  GroupID: [1,2,3,4]
   RandomNoise:
     Enable: 1
     Type: PLATO_SIMU #  either 'User' or 'PLATO_SCALING' or 'PLATO_SIMU'.
@@ -51,13 +69,14 @@ Oscillations:
   DPI : 80.58 # Asymptotic values of the gravity mode period spacing [s], used only with the UP, -1 if you don't want mixed modes to be included
   q : 0.15 # Mixed mode coupling factor, used only with the UP
   SurfaceEffects: 1 # Include near-surface effects in mode frequencies, not implemented for the UP
+  Seed: -1
   
 
 Activity : 
   Enable: 1
   Sigma : 40. # Amplitude of the activity component [ppm]
   Tau : 0.2 # Time-scale of the activity component [days]
-
+  Seed: -1 # Seed of the pseudo-random number generator used to generate the activity component. Negative value if controlled by MasterSeed
   # Spot component (Dorren (1987)'s model)
   # Note that the rotational modulation of the spot(s) is controlled by the surface rotation period
   # and the inclination angle of the rotation axis ; these both parameters are fixed
@@ -74,9 +93,19 @@ Activity :
     TimeMax: [-1,-1, -1]   # The time of maximum spot contrast, in days.  Negative value if you want to be drawn randomly
     Contrast: [0.7, 0.8, 0.6]  # Maximum contrast of the spot (flux of the spot in units of unspotted stellar flux), dimensionless
     Seed: -1 # Seed of the pseudo-random number generator used to generate TimeMax. Negative value if controlled by MasterSeed
+  Flare:
+    Enable: 1
+    UpDown: 0.1
+    Amplitude: 1000. # Amplitude of the flare component [ppm]
+    MeanPeriod: 2
+    MeanDuration: -1
+    DurationDispersion: -1
+    Seed: -1 # Seed of the pseudo-random number generator used to generate the flare component. Negative value if controlled by MasterSeed
 
 Granulation : 
   Enable: 1
+  Type: 0
+  Seed: -1
 
 # Transit parameters
 Transit : 

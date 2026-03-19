@@ -5,6 +5,7 @@ README.txt
 flares.py
 psls.py
 psls.yaml
+setup.cfg
 setup.py
 sls.py
 spotintime.py

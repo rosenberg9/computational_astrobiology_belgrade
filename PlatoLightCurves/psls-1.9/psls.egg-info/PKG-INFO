@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: psls
 Version: 1.9
 Summary: PLATO Stellar Light-curve Simulator (SLS): Simulate stochastically-excited oscillations together with other stellar and instrumental components
@@ -14,6 +14,14 @@ Requires-Dist: h5py
 Requires-Dist: packaging
 Requires-Dist: astropy
 Requires-Dist: matplotlib
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
 
 
 ================================================

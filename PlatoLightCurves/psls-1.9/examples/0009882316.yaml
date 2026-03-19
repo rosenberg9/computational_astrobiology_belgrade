@@ -76,6 +76,8 @@ Activity :
 
 Granulation : 
   Enable: 1
+  Type: 0
+  Seed: 42
 
 # Transit parameters
 Transit : 

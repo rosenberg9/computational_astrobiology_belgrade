@@ -1,0 +1,106 @@
+Observation:
+  QuarterDuration:
+  - 20.0
+  MasterSeed: 1704040900
+  Gaps:
+    Enable: 0
+    Seed: -1
+    InterQuarterGapDuration: 0.0
+    RandomGapDuration: 0.0
+    RandomGapTimeFraction: 0.0
+    RandomGapStep: 0.0
+    PeriodicGapCadence: 0.0
+    PeriodicGapDuration: 0.0
+    PeriodicGapJitter: 0.0
+    PeriodicGapStep: 0.0
+Instrument:
+  Sampling: 60.0
+  IntegrationTime: 50.0
+  GroupID:
+  - 1
+  NCamera: 1
+  TimeShift: 0.0
+  RandomNoise:
+    Enable: 0
+    Type: User
+    NSR: 0.0
+  Systematics:
+    Enable: 0
+    Table: systematics/PLATO_systematics_BOL_V2.npy
+    Version: 2
+    DriftLevel: any
+    Seed: -1
+Star:
+  Mag: 12.5
+  ID: 31000004
+  ModelType: UP
+  ModelDir: models/
+  ModelName: KIC9882316
+  ES: rg
+  Teff: 5400.0
+  Logg: 3.934
+  SurfaceRotationPeriod: 0.0
+  CoreRotationFreq: 0.0
+  Inclination: 20.0
+Oscillations:
+  Enable: 1
+  numax: 181.77120898
+  delta_nu: 13.70885191
+  DPI: 80.30739925
+  q: 0.15611347
+  SurfaceEffects: 0
+  Seed: -1
+Activity:
+  Enable: 0
+  Sigma: 40.0
+  Tau: 0.2
+  Seed: -1
+  Spot:
+    Enable: 0
+    dOmega: 0.0
+    MuStar: 0.59
+    MuSpot: 0.78
+    Radius:
+    - 4.0
+    - 3.0
+    Latitude:
+    - 15.0
+    - -20.0
+    Longitude:
+    - 0.0
+    - 120.0
+    Lifetime:
+    - 12
+    - 18
+    TimeMax:
+    - -1
+    - -1
+    Contrast:
+    - 0.65
+    - 0.72
+    Modulation: 0.0
+    Seed: -1
+  Flare:
+    Enable: 0
+    MeanPeriod: 5.0
+    Amplitude: 1000.0
+    UpDown: 0.1
+    MeanDuration: -1
+    DurationDispersion: -1
+    Seed: -1
+Granulation:
+  Enable: 1
+  Type: 0
+  Seed: -1
+Transit:
+  Enable: 0
+  PlanetRadius: 0.5
+  OrbitalPeriod: 10.0
+  PlanetSemiMajorAxis: 1.0
+  OrbitalAngle: 0.0
+  LimbDarkeningCoefficients:
+  - 0.25
+  - 0.75
+External:
+  Enable: 0
+  FilePath: examples/external_example.txt
