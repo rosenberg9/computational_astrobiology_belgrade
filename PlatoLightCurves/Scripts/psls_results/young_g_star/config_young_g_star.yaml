@@ -1,0 +1,120 @@
+Activity:
+  Enable: 0
+  Flare:
+    Amplitude: 1000.0
+    DurationDispersion: -1
+    Enable: 0
+    MeanDuration: -1
+    MeanPeriod: 2
+    Seed: -1
+    UpDown: 0.1
+  Seed: -1
+  Sigma: 40.0
+  Spot:
+    Contrast:
+    - 0.7
+    - 0.8
+    - 0.6
+    Enable: 0
+    Latitude:
+    - 0.0
+    - 20.0
+    - 40.0
+    Lifetime:
+    - 10
+    - 30
+    - 50
+    Longitude:
+    - 0.0
+    - 0.0
+    - 0.0
+    MuSpot: 0.78
+    MuStar: 0.59
+    Radius:
+    - 2.5
+    - 2.5
+    - 2.5
+    Seed: -1
+    TimeMax:
+    - -1
+    - -1
+    - -1
+    dOmega: 0.0
+  Tau: 0.2
+External:
+  Enable: 0
+  FilePath: examples/external_example.txt
+Granulation:
+  Enable: 0
+  Seed: -1
+  Type: 0
+Instrument:
+  GroupID:
+  - 1
+  - 2
+  - 3
+  - 4
+  IntegrationTime: 21.0
+  NCamera: 6
+  NGroup: 4
+  RandomNoise:
+    Enable: 0
+    NSR: 73.0
+    Type: PLATO_SIMU
+  Sampling: 25.0
+  Systematics:
+    DriftLevel: low
+    Enable: 0
+    Seed: -1
+    Table: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/systematics/PLATO_systematics_BOL_V2.npy
+    Version: 2
+  TimeShift: 6.25
+Observation:
+  Duration: 730.0
+  Gaps:
+    Enable: 0
+    InterQuarterGapDuration: 0.0
+    PeriodicGapCadence: 5.0
+    PeriodicGapDuration: 20.0
+    PeriodicGapJitter: 2.0
+    PeriodicGapStep: 0.0
+    RandomGapDuration: 0.0
+    RandomGapStep: 0.0
+    RandomGapTimeFraction: 0.0
+    Seed: -1
+  MasterSeed: 904040900
+  QuarterDuration:
+  - 91.25
+  - 91.25
+  - 91.25
+  - 91.25
+Oscillations:
+  DPI: 80.58
+  Enable: 0
+  Seed: -1
+  SurfaceEffects: 1
+  delta_nu: 13.68
+  numax: 179.3
+  q: 0.15
+Star:
+  CoreRotationFreq: 0.0
+  ES: ms
+  ID: 1003
+  Inclination: 0.0
+  Logg: 4.5
+  Mag: 10.0
+  ModelDir: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/
+  ModelName: grid_plato.hdf5
+  ModelType: grid
+  Seed: -1
+  SurfaceRotationPeriod: 0.0
+  Teff: 5900.0
+Transit:
+  Enable: 1
+  LimbDarkeningCoefficients:
+  - 0.25
+  - 0.75
+  OrbitalAngle: 0.0
+  OrbitalPeriod: 10.0
+  PlanetRadius: 0.5
+  PlanetSemiMajorAxis: 1.0
