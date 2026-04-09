@@ -1,5 +1,5 @@
 Activity:
-  Enable: 0
+  Enable: 1
   Flare:
     Amplitude: 1000.0
     DurationDispersion: -1
@@ -64,7 +64,7 @@ Instrument:
   Sampling: 25.0
   Systematics:
     DriftLevel: low
-    Enable: 0
+    Enable: 1
     Seed: -1
     Table: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/systematics/PLATO_systematics_BOL_V2.npy
     Version: 2
@@ -82,7 +82,7 @@ Observation:
     RandomGapStep: 0.0
     RandomGapTimeFraction: 0.0
     Seed: -1
-  MasterSeed: 904040900
+  MasterSeed: 1
   QuarterDuration:
   - 91.25
   - 91.25

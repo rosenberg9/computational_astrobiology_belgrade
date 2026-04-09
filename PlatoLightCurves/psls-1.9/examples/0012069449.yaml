@@ -32,7 +32,7 @@ Instrument:
   TimeShift : 6.25 # Time shift between camera groups [s]
   GroupID: [1,2,3,4]
   RandomNoise:
-    Enable: 1
+    Enable: 0
     Type: PLATO_SIMU #  either 'User' or 'PLATO_SCALING' or 'PLATO_SIMU'.
     NSR :  73. # User-specified Noise to Signal Ratio [ppm/hr] for a single camera. This value takes into account all random noises but does not include systematic errors.
   Systematics:
@@ -40,7 +40,7 @@ Instrument:
 # The binary file containing the systematics parameters:
 #    Table : systematics/PLATO_systematics_BOL_V2.npy   
 #    Table : systematics/PLATO_systematics_BOL_FixedMask_V2.npy  
-    Table : systematics/PLATO_systematics_BOL_P1_V2.npy 
+    Table : /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/systematics/PLATO_systematics_BOL_V2.npy  # representative for the sample P5 stars, with mask updates during the quarter
 #    Table : PLATO_systematics_BOL_V0.npy  #   (version 0)
     Version: 2
     DriftLevel: low  # Amplitude of the drift:  'low', 'medium', 'high' or 'any'. Applicable only for Version>0
@@ -48,22 +48,23 @@ Instrument:
 
 # Stellar parameters
 Star:
-  Mag : 10. #  Magnitude
-  ID : 12069449  #  star ID
-  ModelDir : models/ # Directory containing the single models or the grid (parameters and associated theoretical frequencies)
-  ModelType: single  # Type of model: 'grid' or 'single' or 'UP'
-  ModelName: 0012069449  # Name of the input model, to be specified when ModelType = 'single'. The program will then load the corresonding .gsm file generated with ADIPLS.
+  Mag : 10. #  V magnitude (John V magnitude). The V magnitude is converted into the PLATO P magnitude using the star effective temperature following Marchiori et al (2019, A&A)'s Teff-magnitude relation.
+  ID : 12069449  #  star ID (arbitrary number)
+  ModelType: grid  # Type of  pulsation model, this can be either 'UP', 'grid', 'grid-old' 'single', or 'text'.
+  # The option 'grid-old' shall be used with the old type of grid, the new one being stored in HDF5 files
+  ModelDir: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/ # Directory containing the pulsation models (a single ADIPLS file, a grid of ADIPLS files,  or a simple TEXT file, see below)
+  ModelName: grid_plato.hdf5  # Name of the input pulsation model, to be specified when ModelType = 'single' or 'text'.
   ES : ms  # Evolutionary status: 'ms' for the main-sequence phase, 'sg' for the sub-giant phase, 'rg' for redgiants (Red Giant Branch or clump stars)
   Teff : 5750.  # Effective temperature [K]
   Logg : 4.353 # Surface gravity, ignored for the UP
   SurfaceRotationPeriod :  0. # Surface rotation period [days], not used with the UP
   CoreRotationFreq :  0. # Core rotation frequency [muHz], this is by definition Omega/2pi*1e6 where Omega is the angular rate [rad/s], used only with the UP
-  Inclination : 0. # Inclination angle [deg.]
+  Inclination : 0. # Inclination angle [deg.] 
   Seed: -1 # Seed of the pseudo-random number generator used to stellar signal (activity, granulation, and oscillations ; spot excluded). Negative value if controlled by MasterSeed
 
 # Oscillations parameters
 Oscillations:
-  Enable: 1
+  Enable: 0
   numax : 179.3 # frequency at maximum power [muHZ], used only with the UP
   delta_nu : 13.68 # Mean large separation [muHz], used only with the UP, -1 if you want this parameter to be derived from a scaling relation
   DPI : 80.58 # Asymptotic values of the gravity mode period spacing [s], used only with the UP, -1 if you don't want mixed modes to be included
@@ -94,7 +95,7 @@ Activity :
     Contrast: [0.7, 0.8, 0.6]  # Maximum contrast of the spot (flux of the spot in units of unspotted stellar flux), dimensionless
     Seed: -1 # Seed of the pseudo-random number generator used to generate TimeMax. Negative value if controlled by MasterSeed
   Flare:
-    Enable: 1
+    Enable: 0
     UpDown: 0.1
     Amplitude: 1000. # Amplitude of the flare component [ppm]
     MeanPeriod: 2
@@ -103,13 +104,13 @@ Activity :
     Seed: -1 # Seed of the pseudo-random number generator used to generate the flare component. Negative value if controlled by MasterSeed
 
 Granulation : 
-  Enable: 1
+  Enable: 0
   Type: 0
   Seed: -1
 
 # Transit parameters
 Transit : 
-  Enable: 0
+  Enable: 1
   PlanetRadius : 0.5   # in jupiter radii
   OrbitalPeriod : 10.  # in days
   PlanetSemiMajorAxis : 1.  # in A.U.
