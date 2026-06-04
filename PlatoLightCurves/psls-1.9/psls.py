@@ -155,8 +155,13 @@ def AddFlare(time,FlareMeanPeriod,FlareUpDown,FlareAmplitude,FlareMeanDuration,F
     FlareMeanPeriodSec = FlareMeanPeriod*86400. # days -> sec
     if(FlareMeanDuration<=0):
         FlareMeanDurationSec = FlareMeanPeriodSec/5.
+    else:
+        FlareMeanDurationSec = FlareMeanDuration*86400. # days -> sec
+
     if(FlareDurationDispersion):
-        FlareDurationDispersionSec = FlareMeanPeriodSec/20.
+        FlareDurationDispersionSec = FlareDurationDispersion*86400. # days -> sec
+    else:
+        FlareDurationDispersionSec = FlareMeanDurationSec/5.
 
     tmin = time[0]
     tmax = time[-1]

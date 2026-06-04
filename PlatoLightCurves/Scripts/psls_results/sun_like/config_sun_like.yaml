@@ -45,7 +45,7 @@ External:
   Enable: 0
   FilePath: examples/external_example.txt
 Granulation:
-  Enable: 0
+  Enable: 1
   Seed: -1
   Type: 0
 Instrument:
@@ -72,15 +72,15 @@ Instrument:
 Observation:
   Duration: 730.0
   Gaps:
-    Enable: 0
-    InterQuarterGapDuration: 0.0
+    Enable: 1
+    InterQuarterGapDuration: 0
     PeriodicGapCadence: 5.0
     PeriodicGapDuration: 20.0
     PeriodicGapJitter: 2.0
     PeriodicGapStep: 0.0
-    RandomGapDuration: 0.0
+    RandomGapDuration: 1000.0
     RandomGapStep: 0.0
-    RandomGapTimeFraction: 0.0
+    RandomGapTimeFraction: 15
     Seed: -1
   MasterSeed: 1
   QuarterDuration:
@@ -90,7 +90,7 @@ Observation:
   - 91.25
 Oscillations:
   DPI: 80.58
-  Enable: 0
+  Enable: 1
   Seed: -1
   SurfaceEffects: 1
   delta_nu: 13.68
@@ -101,14 +101,14 @@ Star:
   ES: ms
   ID: 1002
   Inclination: 0.0
-  Logg: 4.44
+  Logg: 4.31
   Mag: 10.0
   ModelDir: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/
   ModelName: grid_plato.hdf5
   ModelType: grid
   Seed: -1
   SurfaceRotationPeriod: 0.0
-  Teff: 5778.0
+  Teff: 5700.0
 Transit:
   Enable: 1
   LimbDarkeningCoefficients:
@@ -116,5 +116,5 @@ Transit:
   - 0.75
   OrbitalAngle: 0.0
   OrbitalPeriod: 10.0
-  PlanetRadius: 0.5
+  PlanetRadius: 0.1
   PlanetSemiMajorAxis: 1.0
