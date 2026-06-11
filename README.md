@@ -1,136 +1,134 @@
-# Detecting Exoplanet Transits and Stellar Flares in PLATO Light Curves
+# PLATO Light Curve Classification Pipeline
 
-![Project pipeline](docs/images/pipeline.svg)
+This repository implements a machine learning pipeline for classifying synthetic PLATO mission light curves into four categories: stellar flares, planetary transits, both, or neither. Simulated light curves are generated using [PSLS v1.9](https://gitlab.com/plato-mission/psls) and classified using both a 1D Convolutional Neural Network and a Random Forest trained on hand-crafted features.
 
-## Page 1 of 4: Project Summary
+---
 
-This repository contains a Computational Astrobiology project on simulated PLATO light curves. The main goal is to build a reproducible workflow that generates stellar photometry, injects astrophysical events, and trains classifiers to recognize whether a light curve contains no event, stellar flares, exoplanet transits, or both.
+## Repository Structure
 
-For a non-specialist: a light curve is a record of how bright a star appears over time. A planet crossing in front of the star causes a small, repeating dip in brightness. A stellar flare causes a short, sharp brightening. Real telescope data also contain noise, gaps, and instrument drift, so the same signal can look different depending on observing conditions. This project creates controlled examples of those situations and tests whether machine-learning methods can learn the difference.
-
-The project uses the PLATO Stellar Light-curve Simulator (PSLS) in `PlatoLightCurves/psls-1.9/` to produce physically motivated stellar signals. The generated dataset is stored in `PlatoLightCurves/Scripts/outputs/`, with labels in `PlatoLightCurves/Scripts/paired_simulation_labels_combined.csv`. The label table contains 2,000 simulations: 500 quiet systems, 500 flare-only systems, 500 transit-only systems, and 500 systems containing both a flare and a transit. The second half of the table adds instrument-drift categories so the models can be tested against a harder observing problem.
-
-## Statement of Need
-
-The scientific need is classification under realistic observational uncertainty. Transit detection is a central technique for discovering exoplanets, but light curves are not clean textbook signals. They contain stellar variability, stochastic oscillations, granulation, camera noise, spacecraft systematics, and missing data. A classifier trained only on idealized curves may perform well in a notebook but fail when drift or stellar activity changes the shape of the signal.
-
-This project addresses that need by building a small but complete simulation-to-classification pipeline. It connects physical simulation, controlled labels, preprocessing, feature extraction, and machine learning. The work relates to existing methods in three ways:
-
-- PSLS supplies the physics-based simulation layer for PLATO-like photometry.
-- Box Least Squares and summary statistics provide interpretable baseline features for transit-like periodic dips and flare-like outliers.
-- Random forests, convolutional neural networks, and transformer-style sequence models provide progressively more flexible classification approaches.
-
-The result is not a production planet-search pipeline. It is a tutorial-scale experiment that demonstrates how astrobiology software can move from a physical question to simulated data, reproducible labels, and testable classifiers.
-
-## Main Files
-
-- `PlatoLightCurves/Scripts/data_generation.ipynb`: creates simulation labels and PSLS configuration files.
-- `PlatoLightCurves/Scripts/run_simulations.py`: batch-runs PSLS configurations into output light-curve folders.
-- `PlatoLightCurves/Scripts/preprocessing.ipynb`: explores correction of mask updates, gaps, and drift.
-- `PlatoLightCurves/Scripts/random_forest.ipynb`: feature-based classifier and drift analysis.
-- `PlatoLightCurves/Scripts/CNN.ipynb`: one-dimensional convolutional neural network classifier.
-- `PlatoLightCurves/Scripts/transformers.ipynb`: transformer-style light-curve classifier.
-- `PlatoLightCurves/Scripts/paired_simulation_labels_combined.csv`: final label table used by the classifiers.
-
-<div style="page-break-after: always;"></div>
-
-## Page 2 of 4: Data Generation and Scientific Process
-
-![PSLS power spectral density example](PlatoLightCurves/psls-1.9/0012069449_fig1.png)
-
-The first stage is simulation. Instead of downloading a finished dataset, the project defines many synthetic stellar systems and runs them through PSLS. Each system has a master random seed, stellar parameters, and optional event settings. The key label fields are:
-
-- `anomaly_class`: integer class target, where `0` is quiet, `1` is flare, `2` is transit, and `3` is flare plus transit.
-- `label_has_flares`: binary flag for flare injection.
-- `label_has_transit`: binary flag for transit injection.
-- `star_mass`, `star_teff`, `star_logg`: physical stellar parameters.
-- `flare_amplitude`: flare strength for flare-positive examples.
-- `transit_period`, `transit_radius_earth`: injected planet parameters for transit-positive examples.
-- `drift`: instrument drift category, including `none`, `low`, `medium`, `high`, and `max`.
-
-The simulator writes `.dat` files such as `PlatoLightCurves/Scripts/outputs/sys_0000/0012069449.dat`. Each file stores time, relative flux, and a status or mask column. The flux column is the main learning signal. The time column is needed for plotting, interpolation, and period-search features.
-
-![Dataset composition](docs/images/dataset_summary.svg)
-
-The dataset is deliberately balanced by event class. This makes the first classification problem easier to interpret because overall accuracy is not dominated by the most common class. The drift categories are not perfectly balanced because they represent a second stress-test dimension rather than the primary target. This is useful for the presentation because the model can be evaluated both by event class and by drift strength.
-
-## Physical Meaning of the Labels
-
-Quiet systems are the control group. They still include stellar and instrumental variability, but they do not contain the injected flare or transit events. Flare systems test whether a model can recognize short-duration positive spikes above the stellar background. Transit systems test whether the model can recognize repeated negative dips caused by a planet crossing the stellar disk. Flare-plus-transit systems test whether the model can identify mixed astrophysical behavior instead of assuming only one event type is present.
-
-Instrument drift is important because it can imitate or hide astrophysical signals. A slow trend can reduce the apparent depth of a transit or change the local baseline around a flare. Adding drift therefore turns the task from a clean pattern-recognition exercise into a closer approximation of real observational work.
-
-## Preprocessing
-
-The preprocessing notebooks focus on turning raw simulator output into arrays that a model can learn from. The main operations are:
-
-- Load each `.dat` file from its system folder.
-- Remove or correct discontinuities from mask updates and gaps.
-- Normalize the flux so stars with different baseline brightness can be compared.
-- Resample or truncate long curves to a fixed length when needed by neural networks.
-- Keep labels joined to the processed curve by `system_id`.
-
-This stage is scientifically important because many false positives and false negatives come from preprocessing choices. Over-smoothing can erase shallow transits or narrow flares. Under-correcting drift can cause a model to learn instrument behavior instead of astrophysics.
-
-<div style="page-break-after: always;"></div>
-
-## Page 3 of 4: Models, Interpretation, and Course Concepts
-
-![PSLS averaged light curve example](PlatoLightCurves/psls-1.9/0012069449_fig5.png)
-
-The machine-learning part compares interpretable and sequence-based approaches. The random forest notebook is the best live-run candidate because it exposes the full logic clearly: load labels, read light curves, extract features, split train/test data, fit the model, and inspect classification results. The CNN and transformer notebooks are useful extensions for explaining how deep learning can operate directly on the time series.
-
-## Random Forest Baseline
-
-The random forest model builds a table of engineered features from each light curve. These features include statistical moments, outlier behavior, and period-search information. This approach is valuable because the features can be explained in physical language:
-
-- Large positive excursions suggest flares.
-- Repeating negative dips suggest transits.
-- Skewness, kurtosis, and percentile spreads describe non-Gaussian light-curve shapes.
-- Box Least Squares features connect the model to a standard transit-search method.
-
-The random forest is also robust for a small educational dataset. It can handle mixed feature scales through an imputation pipeline, gives feature-importance diagnostics, and usually trains quickly enough for a live presentation.
-
-## CNN Classifier
-
-The CNN treats the light curve as a one-dimensional signal. Convolution filters slide across time and learn local shapes such as flare spikes, transit ingress and egress, or short clusters of noisy points. Pooling layers reduce the sequence length while keeping important patterns. This is a natural architecture for light curves because the timing of a pattern may shift from one system to another, but the local event shape still matters.
-
-The main tradeoff is interpretability. The CNN can learn directly from the data without hand-designed features, but it is harder to explain exactly which physical measurement drove a prediction. For the exam presentation, the CNN is a good example of an innovation step after the random forest baseline.
-
-## Transformer Classifier
-
-The transformer notebook explores a more flexible sequence model. Attention can compare distant regions of the same light curve, which is useful when transit evidence appears as repeated dips separated by many days. This model is more computationally demanding and needs careful regularization, but it connects the project to modern sequence-learning ideas.
-
-## Course Concepts Used
-
-This project uses several core ideas from the course:
-
-- Simulation as a way to create labeled scientific data when real labels are scarce.
-- Time-series analysis for periodic and transient events.
-- Supervised learning with explicit train/test splits.
-- Feature engineering versus representation learning.
-- Model evaluation with confusion matrices, classification reports, and robustness checks.
-- Reproducibility through fixed seeds, relative paths, saved labels, and documented dependencies.
-
-The strongest coding practices in the repository are the separation between generation, preprocessing, and modeling notebooks; the use of CSV label tables as a clear interface between stages; and the use of deterministic seeds for repeatable simulations. The main improvement to make with more time would be to convert repeated notebook code into importable Python modules and add small unit tests for the loader, preprocessing, and feature-extraction functions.
-
-<div style="page-break-after: always;"></div>
-
-## Page 4 of 4: How to Run and Present
-
-## Environment Setup
-
-Create and activate a clean Python environment from the repository root:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python -m pip install -e PlatoLightCurves/psls-1.9
+```
+.
+├── data_generation.ipynb              # Simulate light curves via PSLS
+├── preprocessing.ipynb                # Instrument drift correction
+├── CNN.ipynb                          # CNN classifier
+├── random_forest.ipynb                # Random Forest classifier
+├── paired_simulation_labels_combined.csv  # Master labels file
+├── configs/                           # Per-system PSLS YAML configs
+├── outputs/                           # Simulated .dat light curve files
+├── cnn_dataset.pt                     # Pre-baked tensor cache (generated)
+└── cnn_checkpoint.pt                  # Trained CNN weights (generated)
 ```
 
-The notebooks should be opened from the repository root or from `PlatoLightCurves/Scripts/` using relative paths only. Do not add local absolute paths such as `/content/...` or `C:/Users/...` before submission.
+---
 
+## Notebooks
 
+### 1. `data_generation.ipynb` — Simulated Dataset Generation
 
+Generates a labelled dataset of synthetic PLATO light curves by driving PSLS with randomised astrophysical parameters. Two batches are produced:
+
+- **~1,000 systems** with no instrumental drift (`drift = "none"`)
+- **~490 systems** with varying drift levels (`low`, `medium`, `high`, `max`)
+
+Each system is assigned one of four anomaly classes:
+
+| Class | Label      | Description                    |
+|-------|------------|--------------------------------|
+| 0     | Neither    | Quiet stellar photometry       |
+| 1     | Flare      | Stellar flare injected         |
+| 2     | Transit    | Planetary transit injected     |
+| 3     | Both       | Flare and transit both present |
+
+**Stellar parameters** are sampled from the PSLS pre-computed stellar grid (`grid_plato.hdf5`), which covers solar-like stars. **Flare parameters** are drawn log-uniformly: amplitude in [500, 20,000] ppm, mean period in [1, 15] days, mean duration in [0.01, 0.1] days. **Transit parameters** are drawn from a log-normal planet radius prior centred at 1.7 R⊕ (σ = 1.0) and a log-uniform orbital period in [2, 100] days, with semi-major axis computed via Kepler's third law.
+
+The notebook also includes visualisations of the injected priors (corner plots of stellar parameters, histograms of transit and flare distributions) and combines both batches into `paired_simulation_labels_combined.csv`.
+
+**Key outputs:** `configs/sys_XXXX.yaml`, `paired_simulation_labels_combined.csv`
+
+---
+
+### 2. `preprocessing.ipynb` — Instrument Drift Correction
+
+The PLATO instrument periodically realigns its pointing to correct for thermo-elastic drift, which introduces two artefacts: discrete flux jumps at each mask update, and a slow intra-segment slope. This notebook corrects both.
+
+**Jump correction** identifies the indices of mask update events from the flag column of each `.dat` file, then aligns adjacent segments by shifting the post-jump flux so that median levels match across the boundary.
+
+**Slope correction** fits a low-frequency Savitzky-Golay baseline to each segment using a downsampled version of the light curve (every 100th point) for speed, interpolates the baseline back to full resolution, and subtracts it.
+
+The pipeline processes all systems in `paired_simulation_labels_combined.csv` that carry a non-zero drift label and writes corrected files as `*_driftcorrected.dat` alongside the originals. A segment-by-segment diagnostic function reports residual median, slope, and variance reduction for quality control.
+
+**Key outputs:** `outputs/sys_XXXX/*_driftcorrected.dat`
+
+---
+
+### 3. `CNN.ipynb` — 1D Convolutional Neural Network Classifier
+
+Trains a 1D CNN on the full light curve waveform, treating classification as a multi-label problem with two independent binary heads: `head_flare` and `head_transit`.
+
+**Pre-baking** (`build_prebaked_dataset`) loads each raw light curve, median-centres the flux, normalises time to [0, 1], interpolates to a uniform 50,000-point grid, and saves the result as a PyTorch tensor cache (`cnn_dataset.pt`) together with flare amplitudes, planet radii, and system IDs. This step is run once; subsequent training loads directly from the cache.
+
+**Architecture** (`LightCurveCNN`): four 1D convolutional layers with BatchNorm, ReLU, and MaxPool (reducing 50k → 12.5k → 3,125 → 781 → 16 via adaptive pooling), followed by shared fully-connected layers (2048 → 256 → 64) with dropout, then two independent linear heads. The design uses progressively smaller kernels (15 → 11 → 7 → 5) to capture both transit-scale slopes and sharp flare spikes.
+
+**Loss functions**: `BCEWithLogitsLoss` applied separately to each head. A `transit_loss` wrapper is included that supports radius-weighted penalties to reduce missed detections of large planets.
+
+**Training** runs for 30 epochs with Adam (lr = 4×10⁻⁴, weight decay = 10⁻⁴), reporting per-epoch precision, recall, F1, and confusion statistics for each head separately.
+
+**Post-training analysis** includes detection probability curves as a function of flare amplitude and planet radius, adjustable classification thresholds (default: 0.5 for flares, tuned around 0.28–0.35 for transits), and light curve visualisations of difficult cases (small planets, faint flares).
+
+**Key outputs:** `cnn_dataset.pt`, `cnn_checkpoint.pt`
+
+---
+
+### 4. `random_forest.ipynb` — Random Forest Classifier with Hand-Crafted Features
+
+Trains a scikit-learn Random Forest on a feature vector derived from each light curve, providing an interpretable baseline and complementary diagnostics to the CNN.
+
+**Feature extraction** is parallelised over CPU cores with `ThreadPoolExecutor`. Three feature groups are computed per system:
+
+- **Statistical / noise features** (16 features): point count, time span, cadence, flux standard deviation, MAD-based noise estimate (σ_MAD), skewness, kurtosis, percentiles (P1–P99), tail widths, and negative-outlier fraction.
+- **Flare features** (9 features): peak SNR, P99 SNR, positive flux area, fraction of points above 3σ and 5σ, longest contiguous above-3σ run (and its duration in days), and local peak contrast around the flux maximum.
+- **BLS transit features** (6 features): peak BLS power, best-fit period, duration, transit depth in ppm, depth SNR, and transit time. BLS searches log-uniformly spaced periods from 2 to 100 days with durations of 0.08, 0.16, 0.32, and 0.64 days.
+
+**Model**: a scikit-learn `Pipeline` with a median imputer (for NaN BLS values on short baselines) and a `RandomForestClassifier` (300 trees, balanced class weights, all CPU cores). Trained on a 75/25 stratified split.
+
+**Analysis** covers confusion matrix, classification report, feature importance ranking, detection probability vs. planet radius (overall and restricted to no-drift systems), detection efficiency vs. flare amplitude, accuracy stratified by drift level, and case studies of failed detections including BLS periodogram diagnostics for individual systems.
+
+---
+
+## Data Flow
+
+```
+PSLS stellar grid (grid_plato.hdf5)
+        │
+        ▼
+data_generation.ipynb  ──►  configs/sys_XXXX.yaml
+                       ──►  outputs/sys_XXXX/*.dat
+                       ──►  paired_simulation_labels_combined.csv
+        │
+        ▼
+preprocessing.ipynb    ──►  outputs/sys_XXXX/*_driftcorrected.dat
+        │
+        ├──────────────────────────────────────────┐
+        ▼                                          ▼
+CNN.ipynb                              random_forest.ipynb
+  └► cnn_dataset.pt                      └► feature matrix
+  └► cnn_checkpoint.pt                   └► trained pipeline
+```
+
+---
+
+## Dependencies
+
+```
+torch, numpy, pandas, scipy, sklearn, astropy, matplotlib, seaborn, tqdm, h5py, pyyaml, corner
+```
+
+PSLS v1.9 must be installed separately and its `psls.yaml` and `grid_plato.hdf5` files placed at `../psls-1.9/` relative to this directory.
+
+---
+
+## Notes
+
+- Large data files (`outputs/`, `cnn_dataset.pt`, `*.dat`) are excluded from version control via `.gitignore`. The `configs/` directory and label CSVs are tracked.
+- The CNN and Random Forest operate on the same underlying dataset but differ in their input representation: the CNN sees the raw interpolated waveform; the Random Forest sees a 31-dimensional feature vector per system.
+- Transit recall is the primary challenge, particularly for planets below ~2 R⊕. The `transit_loss` radius-weighting term in the CNN and the BLS-derived features in the Random Forest are both targeted at this sensitivity limit.
