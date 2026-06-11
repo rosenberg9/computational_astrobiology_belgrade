@@ -1,4 +1,5 @@
 # PLATO Light Curve Classification Pipeline
+[![MASS-UBMATF](https://img.shields.io/badge/MASS--UBMATF-Computational_Astrobiology_2026-blue)
 
 This repository contains a Computational Astrobiology project for classifying synthetic PLATO mission light curves. The workflow generates physically motivated stellar light curves with PSLS, injects astrophysical events, corrects instrumental drift, and trains machine-learning models to identify four event classes:
 
@@ -9,7 +10,7 @@ This repository contains a Computational Astrobiology project for classifying sy
 | 2 | transit | Planetary transit injected |
 | 3 | both | Stellar flare and planetary transit both injected |
 
-For a non-specialist: a light curve records how a star's brightness changes over time. A transiting planet makes a small repeated dip; a stellar flare makes a short brightening. Realistic telescope data also include noise, data gaps, and instrumental drift. This project tests whether models can separate those astrophysical signals from the observing artifacts.
+A light curve records how a star's brightness changes over time. A transiting planet makes a small repeated dip; a stellar flare makes a short brightening. Realistic telescope data also include noise, data gaps, and instrumental drift. This project tests whether models can separate those astrophysical signals from the observing artifacts.
 
 ## Repository Structure
 
@@ -162,7 +163,9 @@ python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-python -m pip install -e PlatoLightCurves/psls-1.9
+cd PlatoLightCurves/psls-1.9
+python setup.py install
+cd ../..
 ```
 
 Open notebooks from `PlatoLightCurves/scripts/` so their relative paths to `../data/` and `../psls-1.9/` resolve correctly.
@@ -201,3 +204,4 @@ A clear 10-minute presentation can follow this structure:
 - The `.pt` CNN artifacts are stored through Git LFS. If they appear as small text pointer files after cloning, run `git lfs pull` or regenerate them from `CNN.ipynb`.
 - `run_simulations.py` still needs a path cleanup before it is used as a grading entry point. The checked-in light-curve outputs are already under `PlatoLightCurves/data/outputs/`.
 - The random forest is the safest notebook for a live demo because it trains quickly, saves an explicit checkpoint, and produces interpretable diagnostics.
+
