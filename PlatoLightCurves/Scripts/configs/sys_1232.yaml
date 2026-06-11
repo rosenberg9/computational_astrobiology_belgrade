@@ -1,0 +1,117 @@
+Activity:
+  Enable: 1
+  Flare:
+    Amplitude: 1246.43964213388
+    DurationDispersion: 0.008135155797702695
+    Enable: 1
+    MeanDuration: 0.040675778988513475
+    MeanPeriod: 6.500666671611243
+    Seed: -1
+    UpDown: 0.2919940646244661
+  Seed: -1
+  Sigma: 40.0
+  Spot:
+    Contrast:
+    - 0.7
+    - 0.8
+    - 0.6
+    Enable: 0
+    Latitude:
+    - 0.0
+    - 20.0
+    - 40.0
+    Lifetime:
+    - 10
+    - 30
+    - 50
+    Longitude:
+    - 0.0
+    - 0.0
+    - 0.0
+    Modulation: 0.0
+    MuSpot: 0.78
+    MuStar: 0.59
+    Radius:
+    - 2.5
+    - 2.5
+    - 2.5
+    Seed: -1
+    TimeMax:
+    - -1
+    - -1
+    - -1
+    dOmega: 0.0
+  Tau: 0.2
+External:
+  Enable: 0
+  FilePath: examples/external_example.txt
+Granulation:
+  Enable: 1
+  Seed: -1
+  Type: 1
+Instrument:
+  GroupID:
+  - 1
+  - 2
+  - 3
+  - 4
+  IntegrationTime: 21.0
+  NCamera: 6
+  RandomNoise:
+    Enable: 1
+    NSR: 73.0
+    Type: PLATO_SIMU
+  Sampling: 25.0
+  Systematics:
+    DriftLevel: low
+    Enable: 1
+    Seed: -1
+    Table: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/systematics/PLATO_systematics_BOL_V2.npy
+    Version: 2
+  TimeShift: 6.25
+Observation:
+  Gaps:
+    Enable: 0
+    InterQuarterGapDuration: 3.0
+    PeriodicGapCadence: 5.0
+    PeriodicGapDuration: 20.0
+    PeriodicGapJitter: 2.0
+    PeriodicGapStep: 0.0
+    RandomGapDuration: 0.0
+    RandomGapStep: 0.0
+    RandomGapTimeFraction: 0.5
+    Seed: -1
+  MasterSeed: 2834951
+  QuarterDuration:
+  - 90.0
+  - 90.0
+  - 90.0
+Oscillations:
+  DPI: 80.58
+  Enable: 1
+  Seed: -1
+  SurfaceEffects: 0
+  delta_nu: 13.68
+  numax: 179.3
+  q: 0.15
+Star:
+  CoreRotationFreq: 0.0
+  ES: ms
+  ID: 12069449
+  Inclination: 0.0
+  Logg: 4.232687873886166
+  Mag: 10.0
+  ModelDir: /Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/
+  ModelName: grid_plato.hdf5
+  ModelType: grid
+  SurfaceRotationPeriod: 0.0
+  Teff: 5798.335570021734
+Transit:
+  Enable: 1
+  LimbDarkeningCoefficients:
+  - 0.25
+  - 0.75
+  OrbitalAngle: 0.0
+  OrbitalPeriod: 65.76112791609486
+  PlanetRadius: 0.06892159038087853
+  PlanetSemiMajorAxis: 0.31284181462375915

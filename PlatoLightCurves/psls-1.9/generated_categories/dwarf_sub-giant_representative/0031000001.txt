@@ -1,0 +1,14 @@
+StarID = 0031000001
+Master_seed = 1704040900
+Version =    1.90
+# star parameters:
+ teff = 5950.000000 ,logg = 4.250000
+ mass = 1.04189,  teff = 5950,  radius = 1.1162,  logg = 4.36004
+# observations parameters:
+ magnitude = 9.6,  duration = 20,  sampling = 60,  frequency_resolution = 0.578704,  nyquist = 8333.33,  white_noise = 0,  time_steps_number = 28800,  bolometric_coefficient = 1.00216
+# oscillation parameters:
+ numax = 2513.2,  deltanu = 116.85,  Amax = 4.01882,  Hmax = 6.33318,  Gammamax = 1.62351,  width_envelop = 648.252,  se_a = 0,  se_b = 1
+# granulation parameters:
+ h1 = 1.18028,  tau1 = 0.000252662,  alpha1 = 4,  h2 = 0.367589,  tau2 = 7.11191e-05,  alpha2 = 4,  taue = 0.000222054
+# activity parameters:
+ sigma_a = 25,  tau_a = 0.35
