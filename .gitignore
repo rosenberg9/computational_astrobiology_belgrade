@@ -1,3 +1,4 @@
 PlatoLightCurves/psls-1.9/grid_plato.hdf5
-PlatoLightCurves/Scripts/outputs
-PlatoLightCurves/Scripts/cnn_dataset.pt
+PlatoLightCurves/data/outputs
+PlatoLightCurves/data/configs
+#PlatoLightCurves/Scripts/cnn_dataset.pt
