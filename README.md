@@ -1,5 +1,5 @@
 # PLATO Light Curve Classification Pipeline
-[![MASS-UBMATF](https://img.shields.io/badge/MASS--UBMATF-Computational_Astrobiology_2026-blue)
+![MASS-UBMATF](https://img.shields.io/badge/MASS--UBMATF-Computational_Astrobiology_2026-blue)
 
 This repository contains a Computational Astrobiology project for classifying synthetic PLATO mission light curves. The workflow generates physically motivated stellar light curves with PSLS, injects astrophysical events, corrects instrumental drift, and trains machine-learning models to identify four event classes:
 
