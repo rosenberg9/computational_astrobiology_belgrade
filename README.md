@@ -173,35 +173,12 @@ Open notebooks from `PlatoLightCurves/scripts/` so their relative paths to `../d
 Recommended live run:
 
 ```text
-PlatoLightCurves/scripts/random_forest.ipynb
+PlatoLightCurves/scripts/analyze_classifiers.ipynb
 ```
 
 For the course checks, run:
 
 ```bash
-pytest --nbmake --nbmake-timeout=60 PlatoLightCurves/scripts/random_forest.ipynb
-nbqa pylint PlatoLightCurves/scripts/random_forest.ipynb
+pytest --nbmake --nbmake-timeout=60 PlatoLightCurves/scripts/analyze_classifiers.ipynb
+nbqa pylint PlatoLightCurves/scripts/analyze_classifiers.ipynb
 ```
-
-If you present a different notebook, replace the path in both commands.
-
-## Presentation Focus
-
-A clear 10-minute presentation can follow this structure:
-
-1. Explain the scientific goal: classify quiet, flare, transit, and mixed PLATO-like light curves.
-2. Explain the need: realistic light curves include stellar variability, gaps, and instrumental drift.
-3. Walk through the repo layout: `data/`, `psls-1.9/`, and `scripts/`.
-4. Live-run `random_forest.ipynb`.
-5. Explain one feature-extraction or model-training cell line by line.
-6. Discuss the main challenge: weak transits and low-amplitude flares are difficult, especially under drift.
-7. Reflect on best practices: fixed labels, saved splits, reusable data artifacts, and separation between generation, preprocessing, and modeling.
-
-## Notes and Current Limitations
-
-- The project uses lowercase `PlatoLightCurves/scripts/` in the current structure.
-- Some older notebook cells may still contain paths from before the reorganization. The intended current paths are `../data/input_labels/`, `../data/outputs/`, and `../data/models/` when running from `PlatoLightCurves/scripts/`.
-- The `.pt` CNN artifacts are stored through Git LFS. If they appear as small text pointer files after cloning, run `git lfs pull` or regenerate them from `CNN.ipynb`.
-- `run_simulations.py` still needs a path cleanup before it is used as a grading entry point. The checked-in light-curve outputs are already under `PlatoLightCurves/data/outputs/`.
-- The random forest is the safest notebook for a live demo because it trains quickly, saves an explicit checkpoint, and produces interpretable diagnostics.
-
