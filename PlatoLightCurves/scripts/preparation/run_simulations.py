@@ -6,14 +6,14 @@ from tqdm import tqdm
 from pathlib import Path
 
 # --- Configuration ---
-PSLS_EXEC   = os.path.abspath("/Users/isaacrosenberg/0. MASS Astrobiology/computational_astrobiology_belgrade/PlatoLightCurves/psls-1.9/psls.py")
+PSLS_EXEC   = os.path.abspath("../../psls-1.9/psls.py")
 CONFIG_DIR  = os.path.abspath("configs")
 OUTPUT_ROOT = os.path.abspath("outputs")
-NUM_SYSTEMS = 1_000
+NUM_SYSTEMS = 1_500
 
 # --- Load ---
 #df = pd.read_csv("paired_simulation_labels.csv")
-df = pd.read_csv("paired_simulation_labels_drift.csv")
+df = pd.read_csv("../../data/input_labels/paired_simulation_labels_v2.csv")
 
 system_ids = df['system_id'].head(NUM_SYSTEMS).tolist()
 
