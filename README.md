@@ -170,13 +170,13 @@ cd ../..
 
 Open notebooks from `PlatoLightCurves/scripts/` so their relative paths to `../data/` and `../psls-1.9/` resolve correctly.
 
-Recommended live run:
+Live run:
 
 ```text
 PlatoLightCurves/scripts/analyze_classifiers.ipynb
 ```
 
-For the course checks, run:
+For the checks, run:
 
 ```bash
 pytest --nbmake --nbmake-timeout=60 PlatoLightCurves/scripts/analyze_classifiers.ipynb
