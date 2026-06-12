@@ -1,18 +1,23 @@
+# Analysis
 astropy
 celerite
 corner
 h5py
-jupyter
-matplotlib
-nbmake
-nbqa
+joblib
 numpy
-packaging
 pandas
-pylint
 PyYAML
 scikit-learn
 scipy
-seaborn
 torch
+
+# Visualization
+matplotlib
+seaborn
 tqdm
+jupyter
+
+# Testing
+nbmake
+nbqa
+pylint
