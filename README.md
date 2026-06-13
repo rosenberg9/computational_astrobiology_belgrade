@@ -143,9 +143,6 @@ The project flow is:
 PSLS stellar grid and base YAML
         |
         v
-light_curves.ipynb
-        |
-        v
 data_generation.ipynb
         |---> data/configs/sim_XXXX.yaml
         |---> data/input_labels/*.csv
