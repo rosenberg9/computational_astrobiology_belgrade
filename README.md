@@ -12,6 +12,32 @@ This repository contains a Computational Astrobiology project for classifying sy
 
 A light curve records how a star's brightness changes over time. A transiting planet makes a small repeated dip; a stellar flare makes a short brightening. Realistic telescope data also include noise, data gaps, and instrumental drift. This project tests whether models can separate those astrophysical signals from the observing artifacts.
 
+## How to Run
+
+Create an environment from the repository root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+cd ../..
+```
+
+Live run:
+
+```text
+PlatoLightCurves/scripts/analyze_classifiers.ipynb
+```
+
+For the checks, run:
+
+```bash
+pytest --nbmake --nbmake-timeout=60 PlatoLightCurves/scripts/analyze_classifiers.ipynb
+nbqa pylint PlatoLightCurves/scripts/analyze_classifiers.ipynb
+```
+
+
 ## Repository Structure
 
 The current project layout is:
@@ -107,9 +133,7 @@ After training, the notebook prints a confusion matrix and classification report
 
 ### `PlatoLightCurves/scripts/analyze_classifiers.ipynb`
 
-This notebook is a short follow-up analysis workspace intended for comparing saved classifiers and loading model artifacts. It currently imports the scientific stack and begins from saved `.pt` or `.joblib` outputs rather than rebuilding simulations. It is useful as a lightweight place to add final comparison plots, but it is not the main training notebook.
-
-If more time is available, this notebook should become the final model-comparison report: load the CNN checkpoint, load `rf_checkpoint.joblib`, evaluate both on the same split, compare precision/recall by class, and summarize where each model fails.
+This notebook is a short follow-up analysis workspace intended for comparing saved classifiers and loading model artifacts. It currently imports the scientific stack and begins from saved `.pt` or `.joblib` outputs rather than rebuilding simulations.
 
 ## End-to-End Workflow
 
@@ -142,33 +166,4 @@ CNN.ipynb                      random_forest.ipynb
         v                              v
 data/models/*.pt               data/models/rf_checkpoint.joblib
                                data/models/rf_full_analysis.csv
-```
-
-## How to Run
-
-Create an environment from the repository root:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-cd PlatoLightCurves/psls-1.9
-python setup.py install
-cd ../..
-```
-
-Open notebooks from `PlatoLightCurves/scripts/` so their relative paths to `../data/` and `../psls-1.9/` resolve correctly.
-
-Live run:
-
-```text
-PlatoLightCurves/scripts/analyze_classifiers.ipynb
-```
-
-For the checks, run:
-
-```bash
-pytest --nbmake --nbmake-timeout=60 PlatoLightCurves/scripts/analyze_classifiers.ipynb
-nbqa pylint PlatoLightCurves/scripts/analyze_classifiers.ipynb
 ```
