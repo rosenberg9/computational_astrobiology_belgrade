@@ -1,6 +1,19 @@
 # PLATO Light Curve Classification Pipeline
 ![MASS-UBMATF](https://img.shields.io/badge/MASS--UBMATF-Computational_Astrobiology_2026-blue)
 
+## Background
+
+### The PLATO Mission
+**PLATO** (PLAnetary Transits and Oscillations of stars) is an upcoming European Space Agency (ESA) mission dedicated to discovering and characterizing exoplanets. Its primary objective is to find Earth-like planets orbiting within the habitable zones of Sun-like stars. To achieve this, PLATO will perform ultra-high-precision, long-term photometry to detect planetary transits. Crucially, the mission also focuses on asteroseismology—measuring the tiny acoustic oscillations of the host stars—to determine stellar masses, radii, and ages with unprecedented accuracy. 
+
+### PSLS: Simulating the Universe
+The **PLATO Solar-like Light-curve Simulator (PSLS)** is a specialized software tool developed to generate highly realistic synthetic light curves that mimic exactly what the PLATO cameras will see. PSLS physically models stellar granulation, acoustic oscillations, and magnetic activity like starspots and flares. Furthermore, it injects realistic instrumental artifacts, including photon noise, telemetry gaps, and the spacecraft's drift. This provides a rigorous testing ground for data pipelines.
+
+### Project Motivation
+Detecting an Earth-sized planet around a Sun-like star requires identifying a brightness drop of barely 0.01%. In raw data, this tiny signal is constantly fighting against noise, aggressive stellar activity (which creates sudden upward spikes) and spacecraft thermal drift (which creates slow, wandering baselines and sudden mask-update jumps). 
+
+Traditional detection algorithms often struggle to disentangle these overlapping astrophysical and instrumental signals. This project tries to solve that problem. By using PSLS to generate a massive, labeled dataset of messy light curves, we can directly evaluate how well modern machine learning handles the noise. Specifically, this repository conducts a head-to-head comparison between Deep Learning architectures (1D Convolutional Neural Networks learning directly from waveforms) and classical Machine Learning (Random Forests relying on expert-engineered features) to determine the most robust strategy for next-generation exoplanet discovery.
+
 This repository contains a Computational Astrobiology project for classifying synthetic PLATO mission light curves. The workflow generates physically motivated stellar light curves with PSLS, injects astrophysical events, corrects instrumental drift, and trains machine-learning models to identify four event classes:
 
 | Class | Label | Meaning |
@@ -9,8 +22,6 @@ This repository contains a Computational Astrobiology project for classifying sy
 | 1 | flare | Stellar flare injected |
 | 2 | transit | Planetary transit injected |
 | 3 | both | Stellar flare and planetary transit both injected |
-
-A light curve records how a star's brightness changes over time. A transiting planet makes a small repeated dip; a stellar flare makes a short brightening. Realistic telescope data also include noise, data gaps, and instrumental drift. This project tests whether models can separate those astrophysical signals from the observing artifacts.
 
 ## How to Run
 
