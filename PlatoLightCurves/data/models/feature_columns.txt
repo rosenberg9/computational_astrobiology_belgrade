@@ -4,7 +4,6 @@ negative_outlier_fraction
 flare_p99_snr
 flare_positive_area_ppm_day
 flare_positive_fraction_3sigma
-flare_longest_run_3sigma
 flare_longest_duration_3sigma_days
 bls_power
 bls_depth_ppm

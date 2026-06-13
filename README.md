@@ -99,13 +99,11 @@ This notebook trains a random forest classifier. It reads the same cached light 
 
 The feature extraction step converts each 50,000-point waveform into a compact feature vector. The features include:
 
-- Shape statistics such as skewness, kurtosis, negative-outlier fraction, and robust noise estimates.
-- Flare indicators such as high-percentile signal-to-noise, positive flux area, fraction of points above 3-sigma and 5-sigma, and longest high-flux run.
-- Transit indicators from Box Least Squares, including best period, duration, depth, depth signal-to-noise, and peak BLS power.
+- Shape statistics such as skewness, kurtosis, negative-outlier fraction.
+- Flare indicators such as high-percentile signal-to-noise, positive flux area, fraction of points above 3-sigma, and longest high-flux run.
+- Transit indicators from Box Least Squares, including best depth, depth signal-to-noise, and peak BLS power.
 
-After training, the notebook prints a confusion matrix and classification report. It then builds `PlatoLightCurves/data/models/rf_full_analysis.csv`, which merges validation predictions with the physical metadata from `paired_simulation_labels_combined.csv`. The later cells use this table to analyze detection probability versus planet radius, flare detection efficiency versus amplitude, accuracy versus drift category, and feature importance.
-
-This is the recommended live-run notebook because it is easier to explain line by line than the neural network while still covering the complete modeling process.
+After training, the notebook prints a confusion matrix and classification report. It then builds `PlatoLightCurves/data/models/rf_full_analysis.csv`, which merges validation predictions with the physical metadata from `paired_simulation_labels_combined.csv`. 
 
 ### `PlatoLightCurves/scripts/analyze_classifiers.ipynb`
 
