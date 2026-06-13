@@ -28,13 +28,14 @@ The current project layout is:
 |   |   `-- outputs/              # Simulated .dat light curve folders
 |   |-- psls-1.9/                 # Bundled PSLS simulator and stellar grid
 |   `-- scripts/
-|       |-- data_generation.ipynb
-|       |-- preprocessing.ipynb
-|       |-- CNN.ipynb
-|       |-- random_forest.ipynb
 |       |-- analyze_classifiers.ipynb
-|       `-- run_simulations.py
-`-- Tutorials/                    # Course tutorial notebooks, not the final project
+|       `-- preparation/
+|           |-- data_generation.ipynb
+|           |-- preprocessing.ipynb
+|           |-- CNN.ipynb
+|           |-- random_forest.ipynb
+|           `-- run_simulations.py
+`-- Tutorials/                    # Tutorial notebooks, not the final project
 ```
 
 Important data files:
@@ -46,7 +47,7 @@ Important data files:
 - `PlatoLightCurves/data/outputs/sys_XXXX/*_driftcorrected.dat`: drift-corrected light curves produced by preprocessing.
 - `PlatoLightCurves/data/models/rf_checkpoint.joblib`: saved random forest pipeline.
 - `PlatoLightCurves/data/models/rf_full_analysis.csv`: validation-set predictions merged with physical labels.
-- `PlatoLightCurves/data/models/cnn_dataset.pt`, `cnn_checkpoint.pt`, `cnn_model.pt`, and `split_indices.pt`: CNN cache/checkpoint artifacts tracked through Git LFS.
+- `PlatoLightCurves/data/models/cnn_dataset.pt`, `cnn_model.pt`, and `split_indices.pt`: CNN cache/checkpoint artifacts tracked through Git LFS.
 
 The combined label table contains 2,000 simulated systems: 500 quiet, 500 flare-only, 500 transit-only, and 500 flare-plus-transit examples. The drift labels are distributed across `none`, `low`, `medium`, `high`, and `max`.
 

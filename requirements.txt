@@ -10,6 +10,7 @@ PyYAML
 scikit-learn
 scipy
 torch
+tables
 
 # Visualization
 matplotlib

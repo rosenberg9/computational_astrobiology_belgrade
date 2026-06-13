@@ -21,7 +21,7 @@ Observation:
 
 # Instrument parameters
 Instrument:
-  Sampling : 250. # Sampling  cadence [s] (nominal value: 25s)
+  Sampling : 25. # Sampling  cadence [s] (nominal value: 25s)
   IntegrationTime : 21. # Integration time [s]
   GroupID: [1,2,3,4] # IDs of the camera groups included in the simulation, example [2,3] to simulate group 2 and group 3
   NCamera : 6 # Number of cameras per group (1 -> 6)
