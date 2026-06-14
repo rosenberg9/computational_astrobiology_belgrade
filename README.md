@@ -3,11 +3,14 @@
 
 ## Background
 
+### Introduction
+The search for exoplanets has been revolutionized by space-based transit photometry, driven primarily by the successes of the Kepler and TESS missions. While Kepler demonstrated that terrestrial planets are ubiquitous across the galaxy [1], and TESS focuses on short-period planets around bright, nearby stars [3], a critical gap remains: the discovery and precise characterization of Earth-like planets in the habitable zones of bright, Sun-like stars.
+
 ### The PLATO Mission
-**PLATO** (PLAnetary Transits and Oscillations of stars) is an upcoming European Space Agency (ESA) mission dedicated to discovering and characterizing exoplanets. Its primary objective is to find Earth-like planets orbiting within the habitable zones of Sun-like stars. To achieve this, PLATO will perform ultra-high-precision, long-term photometry to detect planetary transits. Crucially, the mission also focuses on asteroseismology—measuring the tiny acoustic oscillations of the host stars—to determine stellar masses, radii, and ages with unprecedented accuracy. 
+**PLATO** (PLAnetary Transits and Oscillations of stars) is an upcoming European Space Agency (ESA) mission dedicated to discovering and characterizing exoplanets [1]. Its primary objective is to find Earth-like planets orbiting within the habitable zones of Sun-like stars. To achieve this, PLATO will perform ultra-high-precision, long-term photometry to detect planetary transits. Crucially, the mission also focuses on asteroseismology—measuring the tiny acoustic oscillations of the host stars—to determine stellar masses, radii, and ages with unprecedented accuracy. 
 
 ### PSLS: Simulating the Universe
-The **PLATO Solar-like Light-curve Simulator (PSLS)** is a specialized software tool developed to generate highly realistic synthetic light curves that mimic exactly what the PLATO cameras will see. PSLS physically models stellar granulation, acoustic oscillations, and magnetic activity like starspots and flares. Furthermore, it injects realistic instrumental artifacts, including photon noise, telemetry gaps, and the spacecraft's drift. This provides a rigorous testing ground for data pipelines.
+The **PLATO Solar-like Light-curve Simulator (PSLS)** is a specialized software tool developed to generate highly realistic synthetic light curves that mimic exactly what the PLATO cameras will see [4]. PSLS physically models stellar granulation, acoustic oscillations, and magnetic activity like starspots and flares. Furthermore, it injects realistic instrumental artifacts, including photon noise, telemetry gaps, and the spacecraft's drift. This provides a rigorous testing ground for data pipelines.
 
 ### Project Motivation
 Detecting an Earth-sized planet around a Sun-like star requires identifying a brightness drop of barely 0.01%. In raw data, this tiny signal is constantly fighting against noise, aggressive stellar activity (which creates sudden upward spikes) and spacecraft thermal drift (which creates slow, wandering baselines and sudden mask-update jumps). 
@@ -34,6 +37,15 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 cd ../..
 ```
+
+Some of the files are large, and need to be installed via LFS:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+Additionally, the stellar model grid 'PlatoLightCurves/psls-1.9/grid_plato.hdf5' designed to capture oscillations of Sun-like stars is too large to be included in this repository. It was provided by directly contacting [mailto:reza.samadi@obspm.fr].
 
 Live run:
 
@@ -175,3 +187,14 @@ CNN.ipynb                      random_forest.ipynb
 data/models/*.pt               data/models/rf_checkpoint.joblib
                                data/models/rf_full_analysis.csv
 ```
+
+## References
+
+[1] Borucki, W. J., Koch, D., Basri, G., Batalha, N., Brown, T., Caldwell, D., ... & Prsa, A. (2010). Kepler planet-detection mission: introduction and first results. Science, 327(5968), 977-980.
+
+[2] Rauer, H., Catala, C., Aerts, C., Appourchaux, T., Benz, W., Brandeker, A., ... & Tkachenko, A. (2014). The PLATO 2.0 mission. Experimental Astronomy, 38(1), 249-330.
+
+[3] Ricker, G. R., Winn, J. N., Vanderspek, R., Latham, D. W., Bakos, G. Á., Bean, J. L., ... & Villasenor, J. (2015). Transiting exoplanet survey satellite. Journal of Astronomical Telescopes, Instruments, and Systems, 1(1), 014003-014003.
+
+[4] Samadi, R., Deru, A., Reese, D., Marchiori, V., Grolleau, E., Green, J. J., ... & Smith, A. M. S. (2019). The PLATO Solar-like Light-curve Simulator-A tool to generate realistic stellar light-curves with instrumental effects representative of the PLATO mission. Astronomy & Astrophysics, 624, A117.
+
