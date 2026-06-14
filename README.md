@@ -4,13 +4,13 @@
 ## Background
 
 ### Introduction
-The search for exoplanets has been revolutionized by space-based transit photometry, driven primarily by the successes of the Kepler and TESS missions. While Kepler demonstrated that terrestrial planets are ubiquitous across the galaxy [1], and TESS focuses on short-period planets around bright, nearby stars [3], a critical gap remains: the discovery and precise characterization of Earth-like planets in the habitable zones of bright, Sun-like stars.
+The search for exoplanets has been revolutionized by space-based transit photometry, driven primarily by the successes of the Kepler and TESS missions. While Kepler demonstrated that terrestrial planets are ubiquitous across the galaxy [1], and TESS focuses on short-period planets around bright, nearby stars [3], a gap remains: the discovery of Earth-like planets in the habitable zones of Sun-like stars.
 
 ### The PLATO Mission
-**PLATO** (PLAnetary Transits and Oscillations of stars) is an upcoming European Space Agency (ESA) mission dedicated to discovering and characterizing exoplanets [1]. Its primary objective is to find Earth-like planets orbiting within the habitable zones of Sun-like stars. To achieve this, PLATO will perform ultra-high-precision, long-term photometry to detect planetary transits. Crucially, the mission also focuses on asteroseismology—measuring the tiny acoustic oscillations of the host stars—to determine stellar masses, radii, and ages with unprecedented accuracy. 
+**PLATO** (PLAnetary Transits and Oscillations of stars) is an upcoming European Space Agency (ESA) mission dedicated to discovering and characterizing exoplanets [1]. Its primary objective is to find Earth-like planets orbiting within the habitable zones of Sun-like stars. To achieve this, PLATO will perform ultra-high-precision, long-term photometry to detect planetary transits. Crucially, the mission also focuses on asteroseismology—measuring the tiny acoustic oscillations of the host stars—to determine stellar masses, radii, and ages.
 
 ### PSLS: Simulating the Universe
-The **PLATO Solar-like Light-curve Simulator (PSLS)** is a specialized software tool developed to generate highly realistic synthetic light curves that mimic exactly what the PLATO cameras will see [4]. PSLS physically models stellar granulation, acoustic oscillations, and magnetic activity like starspots and flares. Furthermore, it injects realistic instrumental artifacts, including photon noise, telemetry gaps, and the spacecraft's drift. This provides a rigorous testing ground for data pipelines.
+The **PLATO Solar-like Light-curve Simulator (PSLS)** is a specialized software tool developed to generate synthetic light curves that mimic what the PLATO cameras will see [4]. PSLS models stellar granulation, acoustic oscillations, and magnetic activity like starspots and flares. Furthermore, it injects realistic instrumental artifacts, including photon noise, telemetry gaps, and the spacecraft's drift. This provides a rigorous testing ground for data pipelines.
 
 ### Project Motivation
 Detecting an Earth-sized planet around a Sun-like star requires identifying a brightness drop of barely 0.01%. In raw data, this tiny signal is constantly fighting against noise, aggressive stellar activity (which creates sudden upward spikes) and spacecraft thermal drift (which creates slow, wandering baselines and sudden mask-update jumps). 
@@ -149,7 +149,7 @@ This notebook trains a random forest classifier. It reads the same cached light 
 The feature extraction step converts each 50,000-point waveform into a compact feature vector. The features include:
 
 - Shape statistics such as skewness, kurtosis, negative-outlier fraction.
-- Flare indicators such as high-percentile signal-to-noise, positive flux area, fraction of points above 3-sigma, and longest high-flux run.
+- Flare indicators such as high-percentile signal-to-noise, fraction of points above 3-sigma, and longest high-flux run.
 - Transit indicators from Box Least Squares, including best depth, depth signal-to-noise, and peak BLS power.
 
 After training, the notebook prints a confusion matrix and classification report. It then builds `PlatoLightCurves/data/models/rf_full_analysis.csv`, which merges validation predictions with the physical metadata from `paired_simulation_labels_combined.csv`. 
@@ -197,4 +197,3 @@ data/models/*.pt               data/models/rf_checkpoint.joblib
 [3] Ricker, G. R., Winn, J. N., Vanderspek, R., Latham, D. W., Bakos, G. Á., Bean, J. L., ... & Villasenor, J. (2015). Transiting exoplanet survey satellite. Journal of Astronomical Telescopes, Instruments, and Systems, 1(1), 014003-014003.
 
 [4] Samadi, R., Deru, A., Reese, D., Marchiori, V., Grolleau, E., Green, J. J., ... & Smith, A. M. S. (2019). The PLATO Solar-like Light-curve Simulator-A tool to generate realistic stellar light-curves with instrumental effects representative of the PLATO mission. Astronomy & Astrophysics, 624, A117.
-
